@@ -4,7 +4,7 @@ import * as restify from 'restify';
 
 import { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 
-import { DialogBot } from './bots/dialogBot';
+import { MainDialog } from './dialogs/mainDialog';
 import  { UserProfileDialog } from './dialogs/userProfileDialog';
 
 const ENV_FILE = path.join(__dirname, '..', '.env');
