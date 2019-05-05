@@ -1,17 +1,18 @@
-const restify = require('restify'); // WHYYY can't I do import???
-const path = require('path');
+import { config } from 'dotenv';
+import * as path from 'path';
+import * as restify from 'restify';
 
-const { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } = require('botbuilder');
+import { BotFrameworkAdapter, ConversationState, MemoryStorage, UserState } from 'botbuilder';
 
-const { DialogBot } = require('./bots/dialogBot');
-const { UserProfileDialog } = require('./dialogs/userProfileDialog');
+import { DialogBot } from './bots/dialogBot';
+import  { UserProfileDialog } from './dialogs/userProfileDialog';
 
-const ENV_FILE = path.join(__dirname, '.env');
-require('dotenv').config({ path: ENV_FILE });
+const ENV_FILE = path.join(__dirname, '..', '.env');
+config({ path: ENV_FILE });
 
 const adapter = new BotFrameworkAdapter({
-    appId: ENV_FILE.MicrosoftAppId,
-    appPassword: ENV_FILE.MicrosoftAppPassword
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword
 });
 
 // Catch-all for errors
@@ -22,7 +23,7 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity('Something went wrong');
 
     // Clear state
-    await conversationState.delete();
+    await conversationState.delete(context);
 };
 
 // Define the state store for your bot.
@@ -44,13 +45,13 @@ const bot = new DialogBot(conversationState, userState, dialog, logger);
 
 // Create HTTP server
 let server = restify.createServer();
-server.listen(ENV_FILE.port || process.env.PORT || 3978, function() {
+server.listen(3978, function() {
     console.log(`/n${ server.name } listening to ${ server.url }.`);
 });
 
 server.post('/api/messages', (req, res) => {
-    adapter.processActivity(req, res, async (context) => {
+    adapter.processActivity(req, res, async turnContext => {
         // Route message to the bot's main handler.
-        await bot.run(context);
+        await bot.run(turnContext);
     });
 });
