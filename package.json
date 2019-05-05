@@ -1,0 +1,33 @@
+{
+  "name": "zuko-bot",
+  "version": "1.0.0",
+  "description": "A bot about Zuko",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corinagum/zuko-bot.git"
+  },
+  "author": "corinagum",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corinagum/zuko-bot/issues"
+  },
+  "homepage": "https://github.com/corinagum/zuko-bot#readme",
+  "dependencies": {
+    "botbuilder": "^4.4.0",
+    "botbuilder-dialogs": "^4.4.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.19.0",
+    "path": "^0.12.7",
+    "restify": "^8.3.1"
+  }
+}
