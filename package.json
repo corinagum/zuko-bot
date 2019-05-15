@@ -4,7 +4,10 @@
   "description": "A bot about Zuko",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node ./src/index.js",
+    "watch": "nodemon ./index.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -26,11 +29,6 @@
     "botbuilder-dialogs": "^4.4.0",
     "concurrently": "^4.1.0",
     "dotenv": "^8.0.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.0.1",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^1.19.0",
     "path": "^0.12.7",
     "restify": "^8.3.1",
@@ -38,7 +36,6 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0",
-    "prettier": "1.17.0"
+    "eslint-plugin-react": "^7.13.0"
   }
 }
