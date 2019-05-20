@@ -1,7 +1,11 @@
+/* eslint-disable */
+
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 const { ActivityHandler } = require('botbuilder');
+const MOD2MEDICINE = 'prednisone';
+const STARTDATE = new Date('May 18, 2019 16:00:00') // Factors in UTC time difference; May 19, 2019 00:00:00
 
 class DialogBot extends ActivityHandler {
     /**
@@ -26,12 +30,28 @@ class DialogBot extends ActivityHandler {
         this.dialog = dialog;
         this.logger = logger;
         this.dialogState = this.conversationState.createProperty('DialogState');
+        this.medicineState = this.userState.createProperty('MedicineState');
 
         this.onMessage(async (context, next) => {
             this.logger.log('Running dialog with Message Activity.');
 
             // Run the Dialog with the new message Activity.
-            await this.dialog.run(context, this.dialogState);
+            // await this.dialog.run(context, this.dialogState);
+
+            const medicineRegex = new RegExp(/medicine/gi)
+
+            if (context.activity.text.match(medicineRegex)) {
+                // cache is stored in context; state management object is in storage provider?!?!!?
+                const medicineStateHistory = await this.medicineState.get(context, { mod2Med: MOD2MEDICINE, startDate: STARTDATE });
+
+                const response = medicineStateHistory ? "Today Zuko should have Atopica (stinky grey capsule) and Ketowhatever (1/2 white circular pill)" : "Today Zuko needs prednisone (orange pill)";
+
+                await context.sendActivity(response);
+
+                // every time someone checks medicine, we flip the value
+
+                await this.medicineState.set(context, !medicineStateHistory);
+            }
 
             await next();
         });
